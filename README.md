@@ -116,7 +116,7 @@ This builds the English PDF. An auxiliary source archive is saved locally under
 in `paper/` so the PDF can be rebuilt. Tectonic and its TeX
 bundle are separate build dependencies; the first build may need network access.
 The PDF evidence links are pinned to source commit
-`2140cc40ba3dc2af9ad0600cd2cc1624a47a2bf8` in this repository.
+`14c0ac048777396b121ea877df4f1a08df935a66` in this repository.
 `scripts/configure_release.py --repo URL --revision SHA` can bind a later revision
 only after verifying that its evidence files match the working copy. Rebuild with
 `make paper` after binding. This checks file identity, not remote availability;
