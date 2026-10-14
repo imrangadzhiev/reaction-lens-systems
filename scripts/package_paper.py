@@ -4,7 +4,8 @@ from zipfile import ZipFile, ZipInfo, ZIP_DEFLATED
 
 ROOT=Path(__file__).resolve().parents[1]
 names=['paper/reaction-lens-systems.tex','paper/reaction-lens-systems.bbl',
-       'paper/preamble.tex','paper/numbers.tex','paper/artifact-links.tex',
+       'paper/elsarticle.cls','paper/elsarticle-num.bst',
+       'paper/numbers.tex','paper/artifact-links.tex',
        'paper/references.bib','paper/LICENSE','NUMBERS.csv',
        'results/table1_scoring.csv','results/table2_end_to_end.csv',
        'results/table3_contracts.csv','results/fresh-evaluation.json',
