@@ -1,7 +1,7 @@
 # Third-party materials
 
 The MIT license applies to the author's software and learned Reaction Lens head.
-The authored manuscript and original figures use [CC BY 4.0](paper/LICENSE).
+The authored manuscript and original figures use [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 Third-party licenses are separate:
 
 | Material | Source and terms | Use here |

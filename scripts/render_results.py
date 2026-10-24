@@ -1,4 +1,4 @@
-"""Rebuild tables, paper macros and numerical evidence from recorded observations."""
+"""Rebuild numerical tables and evidence from recorded observations."""
 import argparse
 import csv
 import hashlib
@@ -20,14 +20,13 @@ def csv_text(rows):
 def produce():
     raw = json.loads((ROOT/'results/system-benchmark.json').read_text())
     ev = json.loads((ROOT/'results/fresh-evaluation.json').read_text())
-    numbers, macros = [], []
+    numbers = []
 
     def claim(name, value, unit, source, pointer, places=None):
         display = str(value) if places is None else f'{value:.{places}f}'
         numbers.append(dict(claim=name, value=value, displayed_value=display,
                             unit=unit, source=source, pointer=pointer,
                             generator='scripts/render_results.py'))
-        macros.append('\\newcommand{\\' + name + '}{\\evidence{NUMBERS.csv}{' + display + '}}')
         return display
 
     src = 'results/system-benchmark.json'
@@ -73,7 +72,6 @@ def produce():
         'results/table1_scoring.csv': csv_text(rows),
         'results/table2_end_to_end.csv': csv_text(end['rows']),
         'results/table3_contracts.csv': csv_text([dict(block_size=r['block_size'], **x) for r in raw['cached_feature_runs'] for x in r['contracts']]),
-        'paper/numbers.tex': '\n'.join(macros)+'\n',
     }
     hashes = {name: hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in
               ['results/system-benchmark.json','results/fresh-evaluation.json','PROTOCOL.md',

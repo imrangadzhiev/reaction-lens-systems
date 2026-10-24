@@ -1,8 +1,7 @@
 PYTHON ?= python3
 RUNTIME ?= .venv/bin/python
-TECTONIC ?= tectonic
 
-.PHONY: all table1 contracts timings verify setup test artifacts encoder check-model benchmark serve paper
+.PHONY: all table1 contracts timings verify setup test artifacts encoder check-model benchmark serve
 all table1 contracts timings:
 	$(PYTHON) scripts/render_results.py
 verify:
@@ -17,12 +16,9 @@ artifacts:
 encoder:
 	$(RUNTIME) scripts/download_artifacts.py --encoder
 check-model: artifacts
-	$(RUNTIME) scripts/check_release.py --bundle artifacts/structured-seed23
+	$(RUNTIME) scripts/check_release.py --bundle .local/artifacts/structured-seed23
 benchmark: encoder
 	mkdir -p .local/runs
-	$(RUNTIME) scripts/benchmark_system.py --bundle artifacts/structured-seed23 --encoder artifacts/encoder --examples examples/latency-examples.json --output .local/runs/system-benchmark.json
+	$(RUNTIME) scripts/benchmark_system.py --bundle .local/artifacts/structured-seed23 --encoder .local/artifacts/encoder --examples examples/latency-examples.json --output .local/runs/system-benchmark.json
 serve: encoder
 	./start.sh
-paper: all verify
-	cd paper && $(TECTONIC) --untrusted --keep-logs --keep-intermediates reaction-lens-systems.tex
-	$(PYTHON) scripts/package_paper.py

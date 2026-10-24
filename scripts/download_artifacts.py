@@ -38,13 +38,13 @@ def main():
     parser.add_argument('--anonymous', action='store_true', help='Disable saved HF credentials')
     args = parser.parse_args()
     pin = json.loads((ROOT / 'artifact-manifest.json').read_text())
-    bundle = ROOT / 'artifacts/structured-seed23'
+    bundle = ROOT / '.local/artifacts/structured-seed23'
     ensure(pin['repo_id'], pin['revision'], bundle, pin['files_sha256'], args.anonymous)
     manifest, _, _ = load_bundle(bundle)
     if args.encoder:
         for name in ('base', 'adapter'):
             spec = manifest['encoder'][name]
-            ensure(spec['repo'], spec['revision'], ROOT / 'artifacts/encoder' / name,
+            ensure(spec['repo'], spec['revision'], ROOT / '.local/artifacts/encoder' / name,
                    spec['files_sha256'], args.anonymous)
     print('Artifact hashes verified. Existing verified files require no network access.')
 

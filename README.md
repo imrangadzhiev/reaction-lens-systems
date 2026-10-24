@@ -6,19 +6,18 @@
 
 ![Python](https://img.shields.io/badge/Python-3.11%E2%80%933.12-blue)
 ![Code license](https://img.shields.io/badge/code-MIT-green)
-![Paper license](https://img.shields.io/badge/paper-CC_BY_4.0-green)
-
-[Paper](paper/reaction-lens-systems.pdf) · [Protocol](PROTOCOL.md) · [Numerical evidence](NUMBERS.csv)
+[Protocol](PROTOCOL.md) · [Numerical evidence](NUMBERS.csv) · [Model bundle](https://huggingface.co/imrangadzhiev/reaction-lens-systems)
 
 </div>
 
-Reaction Lens Systems ranks Reactome reactions from English scientific titles
-and abstracts. This experience report evaluates a fixed implementation: whether
-candidate transformations and scoring blocks preserve pairwise scores, and how
-encoding and scoring contribute to local inference cost. Predictions are
-proposals for human review, not verified biological conclusions.
+Reaction Lens retrieves Reactome reactions from English scientific titles and
+abstracts using a description-conditioned global/local scorer. The release
+provides full-catalog inference, integrity-checked model artifacts and executable
+verification of candidate-independent scores. Recorded results separate encoding
+cost from exact scoring and bind each observation to a fixed model and source
+identity. Ranked reactions and selected sets support expert literature review.
 
-## Verify the paper's numbers
+## Verify the recorded results
 
 From the repository root, with Python 3.11 or 3.12:
 
@@ -30,8 +29,8 @@ No model download, account or third-party Python package is required.
 Validation also rejects missing/duplicate probes, incomplete catalog predictions,
 changed artifact identities and relaxed acceptance tolerances. This checks
 recorded observations, summary statistics, generated outputs and the hashes of
-the measured implementation. Run `make all` to regenerate tables and numeric
-macros from the committed observations. These commands do not rerun inference.
+the measured implementation. Run `make all` to regenerate the numerical tables
+from the committed observations. These commands do not rerun inference.
 
 ## Install and run
 
@@ -56,8 +55,8 @@ Anonymous downloads from an empty cache have been verified against their hashes.
 The model repository, immutable revision and nine required file hashes are in
 [artifact-manifest.json](artifact-manifest.json). Downloads select only those
 files; unrelated model-repository contents are not needed. The bundle manifest
-pins the upstream encoder revisions and hashes. Local models and environments
-are excluded from version control.
+pins the upstream encoder revisions and hashes. Downloaded models are stored in
+`.local/artifacts/`; local models and environments are excluded from version control.
 
 ## Reproduce inference and measurements
 
@@ -84,12 +83,12 @@ warmups and measurement boundaries. The local artifact files occupy about
 
 ## Evidence map
 
-| Paper result | Committed evidence | Regeneration |
+| Recorded result | Committed evidence | Regeneration |
 |---|---|---|
-| Table 1: blocking latency and memory | [Scoring table](results/table1_scoring.csv) | `make table1` |
-| Section 5.1: candidate contracts | [All contract probes](results/table3_contracts.csv) | `make contracts` |
-| Section 5.2: complete predictions | [Component timings](results/table2_end_to_end.csv) | `make timings` |
-| Section 5.3: cached-feature ranking | [Fresh evaluation](results/fresh-evaluation.json) | `make check-model` |
+| Blocking latency and memory | [Scoring table](results/table1_scoring.csv) | `make table1` |
+| Candidate-independence checks | [All contract probes](results/table3_contracts.csv) | `make contracts` |
+| Complete predictions | [Component timings](results/table2_end_to_end.csv) | `make timings` |
+| Cached-feature ranking | [Fresh evaluation](results/fresh-evaluation.json) | `make check-model` |
 
 The CSV regeneration targets share one deterministic renderer. Raw benchmark
 observations are in [system-benchmark.json](results/system-benchmark.json).
@@ -97,29 +96,12 @@ observations are in [system-benchmark.json](results/system-benchmark.json).
 transformations; [measured-source-hashes.json](measured-source-hashes.json)
 identifies the measured scorer, encoder, pipeline and benchmark script.
 
-Candidate-independent scores do not imply stable ranks or calibrated biological
-probabilities. The latency inputs form a small convenience sample, and the memory
-comparison has one trial per configuration. The reference uses exact scoring;
-it is not a competing retrieval baseline. See the paper for limitations.
+The protocol specifies the fixed checkpoint, CPU FP32 environment, sampled inputs
+and workload boundaries. Candidate invariants apply to pair scores and
+fixed-threshold selection; ranking positions depend on the candidate set.
 
-## Build the paper
+## Research materials and licenses
 
-With [Tectonic](https://tectonic-typesetting.github.io/) installed and its TeX
-bundle available:
-
-```sh
-make paper
-```
-
-This builds the English PDF. An auxiliary source archive is saved locally under
-`.local/paper/` and is excluded from version control. The LaTeX sources remain
-in `paper/` so the PDF can be rebuilt. Tectonic and its TeX
-bundle are separate build dependencies; the first build may need network access.
-The PDF evidence links are pinned to source commit
-`14c0ac048777396b121ea877df4f1a08df935a66` in this repository.
-`scripts/configure_release.py --repo URL --revision SHA` can bind a later revision
-only after verifying that its evidence files match the working copy. Rebuild with
-`make paper` after binding. This checks file identity, not remote availability;
-readers need public access to the referenced repository and commit. Source code is licensed under
-[MIT](LICENSE), manuscript text under [CC BY 4.0](paper/LICENSE). Model and data
-terms are documented separately in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Source code is licensed under [MIT](LICENSE), manuscript text under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+Model and data terms are documented separately in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

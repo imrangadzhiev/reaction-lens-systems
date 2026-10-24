@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "Please cite this software when using Reaction Lens Systems."
+type: software
+title: "Reaction Lens Systems"
+authors:
+  - family-names: "Gadzhiev"
+    given-names: "Imran"
+    affiliation: "Independent Researcher, Manchester, United Kingdom"
+    email: "i.gadzhiev.m@gmail.com"
+repository-code: "https://github.com/imrangadzhiev/reaction-lens-systems"
+url: "https://github.com/imrangadzhiev/reaction-lens-systems"
+license: MIT

@@ -8,7 +8,7 @@ version = "0.1.0.dev0"
 description = "Score a full reaction catalog from scientific text"
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
-authors = [{name = "Imran Gadzhiev"}]
+authors = [{name = "Imran Gadzhiev", email = "i.gadzhiev.m@gmail.com"}]
 license = "MIT"
 license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
 dependencies = ["torch>=2.6,<3", "numpy>=2,<3", "safetensors>=0.5,<1"]

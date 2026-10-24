@@ -13,7 +13,7 @@ def main():
     p.add_argument('--repo', help='HF model repository; private repos require hf auth login')
     p.add_argument('--revision', help='Full immutable HF commit SHA')
     p.add_argument('--bundle', type=Path, help='Existing local bundle; no downloads')
-    p.add_argument('--cache', type=Path, default=ROOT/'artifacts/hub')
+    p.add_argument('--cache', type=Path, default=ROOT/'.local/artifacts/hub')
     p.add_argument('--threads', type=int, default=2)
     a = p.parse_args()
     if bool(a.repo) != bool(a.revision) or (a.repo and a.bundle):
